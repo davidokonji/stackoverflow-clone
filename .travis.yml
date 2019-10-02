@@ -4,6 +4,12 @@ node_js:
 cache:
   directories:
     - "node_modules"
+deploy:
+  provider: heroku
+  api_key:
+    secret: 2eeb13bf-c68c-40bb-8bbc-7d7887f35c68
+    app: stackoverflow-clone-dev
+  on: develop
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- -- --version 1.15.2
   - export PATH="$HOME/.yarn/bin:$PATH"
