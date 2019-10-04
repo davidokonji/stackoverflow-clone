@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../../index';
 import usermocks from './mocks/user-mock';
 import '../config/db';
-import prepareDb from './helpers/prepareUser';
+import prepareDb from './helpers/prepareDb';
 
 chai.use(chaiHttp);
 

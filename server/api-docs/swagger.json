@@ -13,11 +13,11 @@
   "tags": [
     {
       "name": "Authentication",
-      "description": "user authentication"
+      "description": ""
     },
     {
       "name": "Question",
-      "description": "Stack Overflow clone question"
+      "description": ""
     },
     {
       "name": "user",
@@ -192,172 +192,79 @@
           },
           "400": {
             "description": "Invalid Id passed"
+          },
+          "404": {
+            "description": "Question not found"
           }
         }
       }
     },
-    "/pet/{petId}": {
-      "get": {
+    "/question/:id/upvote": {
+      "put": {
         "tags": [
-          "pet"
+          "Question"
         ],
-        "summary": "Find pet by ID",
-        "description": "Returns a single pet",
-        "operationId": "getPetById",
+        "summary": "Upvote a question",
+        "description": "Returns a updated vote",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
           {
-            "name": "petId",
+            "name": "ID",
             "in": "path",
-            "description": "ID of pet to return",
+            "description": "ID of question",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Login"
-            }
+            "description": "Question Upvoted!"
           },
           "400": {
             "description": "Invalid ID supplied"
           },
-          "404": {
-            "description": "Pet not found"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Updates a pet in the store with form data",
-        "description": "",
-        "operationId": "updatePetWithForm",
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet that needs to be updated",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "description": "Updated name of the pet",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "status",
-            "in": "formData",
-            "description": "Updated status of the pet",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Deletes a pet",
-        "description": "",
-        "operationId": "deletePet",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "api_key",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "Pet id to delete",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
+          "401": {
+            "description": "Unauthorized request"
           },
           "404": {
-            "description": "Pet not found"
+            "description": "Question not found"
           }
         }
       }
     },
-    "/pet/{petId}/uploadImage": {
-      "post": {
+    "/question/:id/downvote": {
+      "put": {
         "tags": [
-          "pet"
+          "Question"
         ],
-        "summary": "uploads an image",
-        "description": "",
-        "operationId": "uploadFile",
-        "consumes": [
-          "multipart/form-data"
-        ],
+        "summary": "Downvote a question",
+        "description": "Downvote an existing question",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "petId",
+            "name": "ID",
             "in": "path",
-            "description": "ID of pet to update",
+            "description": "ID of question",
             "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "additionalMetadata",
-            "in": "formData",
-            "description": "Additional data to pass to server",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "file",
-            "in": "formData",
-            "description": "file to upload",
-            "required": false,
-            "type": "file"
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/ApiResponse"
-            }
+            "description": "Question Downvoted!"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Unauthorized request"
+          },
+          "404": {
+            "description": "Question not found"
           }
         }
       }

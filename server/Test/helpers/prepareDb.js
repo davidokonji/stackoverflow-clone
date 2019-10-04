@@ -5,6 +5,11 @@ let models = {
   user: User,
   question: Question
 }
+/**
+ * Preparing Db before testing
+ * 
+ * @param {*} key 
+ */
 const prepareDb = async (key) =>  {
   return await models[key].deleteMany({});
 };

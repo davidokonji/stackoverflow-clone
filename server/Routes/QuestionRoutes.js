@@ -12,4 +12,8 @@ router.get('/', QuestionController.index);
 
 router.get('/:id',validateObjId, QuestionController.show);
 
+router.put('/:id/upvote',[isAuthenticated, validateObjId], QuestionController.upvote);
+
+router.put('/:id/downvote',[isAuthenticated, validateObjId], QuestionController.downvote);
+
 export default router;

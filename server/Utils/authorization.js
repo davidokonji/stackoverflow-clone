@@ -1,6 +1,13 @@
 import Response from "./response";
 import { verifyToken } from "./jwt-sign";
 
+/**
+ * Authenticated user middleware
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const isAuthenticated = async (req, res, next) => {
   const { authorization } = req.headers;
 

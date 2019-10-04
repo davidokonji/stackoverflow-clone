@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../../index';
 import usermocks from './mocks/user-mock';
 import questionmocks from './mocks/question-mock';
-import prepareDb from './helpers/prepareUser';
+import prepareDb from './helpers/prepareDb';
 
 chai.use(chaiHttp);
 
@@ -104,6 +104,34 @@ describe('Questions', () => {
       .get(`/api/question/5d977db25d8f3d1af4d46473`);
       
       expect(res).to.have.status(404);
+    });
+  });
+
+  describe('Upvote Question', () => {
+    it('should return a upvoted question', async () => {
+      const res = await chai
+      .request(app)
+      .put(`/api/question/${questionId}/upvote`)
+      .set({
+        Authorization: `Bearer ${validToken}`
+      });
+
+      expect(res).to.have.status(200);
+      expect(res.body.data.vote).to.equal(1);
+    });
+  });
+
+   describe('Downvote Question', () => {
+    it('should return a downvoted question', async () => {
+      const res = await chai
+      .request(app)
+      .put(`/api/question/${questionId}/downvote`)
+      .set({
+        Authorization: `Bearer ${validToken}`
+      });
+
+      expect(res).to.have.status(200);
+      expect(res.body.data.vote).to.equal(0);
     });
   });
 });
