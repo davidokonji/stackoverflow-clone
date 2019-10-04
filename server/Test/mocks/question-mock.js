@@ -4,5 +4,11 @@ export default {
   },
   invalidQuestion: {
     body: ""
+  },
+  validResponse: {
+    body: "This is a test response"
+  },
+  invalidResponse: {
+    body: ""
   }
 }

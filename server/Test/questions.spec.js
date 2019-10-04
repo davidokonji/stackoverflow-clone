@@ -15,6 +15,9 @@ describe('Questions', () => {
   before(async () => {
     await prepareDb('user');
     await prepareDb('question');
+    await prepareDb('respond');
+    await prepareDb('vote');
+
     const user = await chai
     .request(app)
     .post('/api/auth/signup')
@@ -119,6 +122,14 @@ describe('Questions', () => {
       expect(res).to.have.status(200);
       expect(res.body.data.vote).to.equal(1);
     });
+
+    it('should return a 401 on unauthenticated user try', async () => {
+      const res = await chai
+      .request(app)
+      .put(`/api/question/${questionId}/upvote`);
+
+      expect(res).to.have.status(401);
+    });
   });
 
    describe('Downvote Question', () => {
@@ -132,6 +143,50 @@ describe('Questions', () => {
 
       expect(res).to.have.status(200);
       expect(res.body.data.vote).to.equal(0);
+    });
+
+    it('should return a 401 on unauthenticated user try', async () => {
+      const res = await chai
+      .request(app)
+      .put(`/api/question/${questionId}/downvote`);
+
+      expect(res).to.have.status(401);
+    });
+  });
+
+  describe('Question Response', () => {
+    it('should return 201 response of a question', async () => {
+      const res = await chai
+      .request(app)
+      .post(`/api/question/${questionId}/respond`)
+      .send(questionmocks.validResponse)
+      .set({
+        Authorization: `Bearer ${validToken}`
+      });
+
+      expect(res).to.have.status(201);
+      expect(res.body.data.response).to.equal(questionmocks.validResponse.body);
+    });
+
+    it('should return 422 when response entry absent', async () => {
+      const res = await chai
+      .request(app)
+      .post(`/api/question/${questionId}/respond`)
+      .send(questionmocks.invalidResponse)
+      .set({
+        Authorization: `Bearer ${validToken}`
+      });
+
+      expect(res).to.have.status(422);
+    });
+
+    it('should return 401 on unauthenticated user try', async () => {
+      const res = await chai
+      .request(app)
+      .post(`/api/question/${questionId}/respond`)
+      .send(questionmocks.validResponse);
+
+      expect(res).to.have.status(401);
     });
   });
 });

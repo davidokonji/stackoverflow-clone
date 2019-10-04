@@ -1,9 +1,13 @@
 import User from '../../Models/User';
 import Question from '../../Models/Question';
+import Responds from '../../Models/Respond';
+import Vote from '../../Models/Vote';
 
 let models = {
   user: User,
-  question: Question
+  question: Question,
+  respond: Responds,
+  vote: Vote
 }
 /**
  * Preparing Db before testing
