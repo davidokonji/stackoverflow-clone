@@ -17,6 +17,10 @@ switch (env) {
         DB_URL: process.env.DB_URL_PROD
       }
     break
+  case 'test':
+    keys = {
+      DB_URL: process.env.DB_URL_TEST
+    }
 
   default:
     break;

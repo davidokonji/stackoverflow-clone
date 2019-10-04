@@ -10,16 +10,19 @@
     "start": "cross-env NODE_ENV=production node build/index.js",
     "start:dev": "yarn run build && cross-env NODE_ENV=development node build/index.js",
     "prestart": "yarn run build",
-    "build": "./node_modules/.bin/babel index.js -d build && ./node_modules/.bin/babel server -d build/server",
-    "test": "mocha --exit --require @babel/register --timeout 600000 ./server/Test/**/*.spec.js"
+    "build": "./node_modules/.bin/babel index.js -d build && ./node_modules/.bin/babel server -d build/server --copy-files",
+    "test": "cross-env NODE_ENV=test mocha --exit --require @babel/register --timeout 600000 ./server/Test/**/*.spec.js"
   },
   "dependencies": {
     "@babel/cli": "^7.6.2",
     "@babel/core": "^7.6.2",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
     "babel-polyfill": "^6.26.0",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
@@ -27,8 +30,11 @@
     "cross-env": "^6.0.3",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^6.2.1",
     "mongodb": "^3.3.2",
-    "mongoose": "^5.7.3"
+    "mongoose": "^5.7.3",
+    "swagger-ui-express": "^4.1.1",
+    "validator": "^11.1.0"
   }
 }
