@@ -1,6 +1,6 @@
 import Question from "../Models/Question";
 import Response from "../Utils/response";
-import { ObjectID } from 'mongodb';
+import Vote from "../Models/Vote";
 
 class QuestionsController {
 
@@ -26,14 +26,7 @@ class QuestionsController {
    * @param {*} res 
    */
   static async create(req, res) {
-    const { 
-      body: {
-        body
-      },
-      user: {
-        _id
-      }
-     } = req;
+    const { body: { body }, user: { _id } } = req;
 
     const newQestion = new Question({
       body,
@@ -54,6 +47,7 @@ class QuestionsController {
    */
   static async show(req, res) {
     const { id } = req.params;
+
     const question = await Question.findById(id)
     .populate({
       path: 'author',
@@ -62,6 +56,38 @@ class QuestionsController {
     .exec();
     if (!question) return Response(res, 404, 'Question not found');
     return Response(res, 200,'Successfully fetched question', question);
+  }
+
+  static async upvote(req, res) {
+    const { params: { id }, user: { _id } } = req;
+
+    const question = await Question.findById(id);
+    if(!question) return Response(res, 404, 'Question not found');
+    question.vote += 1;
+    question.save();
+    //Tracking user votes
+    new Vote({
+      user: _id,
+      question: question._id,
+      type: 'up'
+    }).save();
+    return  Response(res, 200, 'Question Upvoted!', question);
+  }
+
+  static async downvote(req, res) {
+    const { params: { id }, user: { _id } } = req;
+    
+      const question = await Question.findById(id);
+      if(!question) return Response(res, 404, 'Question not found');
+      question.vote -= 1;
+      question.save();
+      //Tracking user votes
+      new Vote({
+        user: _id,
+        question: question._id,
+        type: 'down'
+      }).save();
+      return  Response(res, 200, 'Question Downvoted!', question);
   }
 }
 

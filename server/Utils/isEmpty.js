@@ -1,6 +1,13 @@
 import validator from 'validator';
 import Response from './response';
 
+/**
+ * Empty values check helper
+ * 
+ * @param {*} body 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const isEmpty = (body, res, next) => {
   const check = {};
   Object.entries(body).map((value) => {

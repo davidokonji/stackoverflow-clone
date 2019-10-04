@@ -7,13 +7,18 @@ const question = new Schema({
     type: String,
     required: true
   },
+  vote: {
+    type: Number,
+    default: 0
+  },
   createdAt: {
     type: Date,
     default: Date.now
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   }
 });
 
