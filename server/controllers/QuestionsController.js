@@ -1,6 +1,7 @@
 import Question from "../Models/Question";
 import Response from "../Utils/response";
 import Vote from "../Models/Vote";
+import Responds from "../Models/Respond";
 
 class QuestionsController {
 
@@ -58,6 +59,12 @@ class QuestionsController {
     return Response(res, 200,'Successfully fetched question', question);
   }
 
+  /**
+   * Upvote a single question
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   */
   static async upvote(req, res) {
     const { params: { id }, user: { _id } } = req;
 
@@ -74,6 +81,12 @@ class QuestionsController {
     return  Response(res, 200, 'Question Upvoted!', question);
   }
 
+  /**
+   * Downvote a single question
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   */
   static async downvote(req, res) {
     const { params: { id }, user: { _id } } = req;
     
@@ -88,6 +101,25 @@ class QuestionsController {
         type: 'down'
       }).save();
       return  Response(res, 200, 'Question Downvoted!', question);
+  }
+
+  /**
+   * Respond to a question
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   */
+  static async respond(req, res) {
+    const { params: { id }, user: { _id }, body: { body } } = req;
+    const saveResponse = new Responds({
+      response: body,
+      user: _id,
+      question: id
+    });
+    saveResponse.save(function(err, data) {
+      if(err) return Response(res, 400,err.message);
+      return Response(res, 201, 'New Question Response', data);
+    })
   }
 }
 

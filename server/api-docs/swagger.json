@@ -231,7 +231,12 @@
           "404": {
             "description": "Question not found"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     },
     "/question/:id/downvote": {
@@ -266,33 +271,52 @@
           "404": {
             "description": "Question not found"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     },
-    "/store/inventory": {
-      "get": {
+    "/question/:id/respond": {
+      "post": {
         "tags": [
-          "store"
+          "Question"
         ],
-        "summary": "Returns pet inventories by status",
-        "description": "Returns a map of status codes to quantities",
-        "operationId": "getInventory",
+        "summary": "respond to a question",
+        "description": "answering a particular question",
         "produces": [
           "application/json"
         ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "description": "ID of question",
+            "required": true,
+            "type": "integer"
           }
-        }
+        ],
+        "responses": {
+          "201": {
+            "description": "New Question Response"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Unauthorized request"
+          },
+          "404": {
+            "description": "Question not found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     },
     "/store/order": {
