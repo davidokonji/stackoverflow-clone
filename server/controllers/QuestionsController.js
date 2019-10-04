@@ -35,7 +35,6 @@ class QuestionsController {
     });
 
     newQestion.save(function(err, data) {
-      if(err) return Response(res, 400,err.message);
       return Response(res, 201, 'New Question Created', data);
     });
   }
@@ -88,7 +87,7 @@ class QuestionsController {
    * @param {*} res 
    */
   static async downvote(req, res) {
-    const { params: { id }, user: { _id } } = req;
+      const { params: { id }, user: { _id } } = req;
     
       const question = await Question.findById(id);
       if(!question) return Response(res, 404, 'Question not found');
@@ -117,7 +116,6 @@ class QuestionsController {
       question: id
     });
     saveResponse.save(function(err, data) {
-      if(err) return Response(res, 400,err.message);
       return Response(res, 201, 'New Question Response', data);
     })
   }

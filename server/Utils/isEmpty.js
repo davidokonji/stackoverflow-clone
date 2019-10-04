@@ -1,6 +1,7 @@
 import validator from 'validator';
 import Response from './response';
 
+/* istanbul ignore file */
 /**
  * Empty values check helper
  * 
