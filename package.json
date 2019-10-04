@@ -12,7 +12,7 @@
     "prestart": "yarn run build",
     "build": "./node_modules/.bin/babel index.js -d build && ./node_modules/.bin/babel server -d build/server --copy-files",
     "test": "cross-env NODE_ENV=test nyc mocha --exit --require @babel/register --timeout 600000 ./server/Test/**/*.spec.js",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov"
   },
   "nyc": {
     "exclude": [
@@ -46,6 +46,7 @@
     "@babel/register": "^7.6.2",
     "@babel/runtime": "^7.6.2",
     "babel-polyfill": "^6.26.0",
+    "coveralls": "^3.0.6",
     "nyc": "^14.1.1"
   }
 }
