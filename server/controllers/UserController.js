@@ -19,7 +19,7 @@ class UserController {
       if(err) return Response(res,422,err.errmsg);
     
       const sanitizeData = sanitizeUserData(data);
-      const token = await generateToken(sanitizeData);
+      const token = await generateToken(sanitizeData, '30d');
 
       return Response(res, 201, 'Successfully Registered User', {
         token,

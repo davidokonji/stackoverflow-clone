@@ -1,0 +1,4 @@
+exclude_patterns:
+- "server/Test/*.js"
+- "server/Models/*.js"
+- "server/config/*.js"

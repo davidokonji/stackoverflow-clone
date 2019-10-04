@@ -4,11 +4,12 @@ import Response from './response';
 
 dotenv.config();
 
+/* istanbul ignore next */
 /**
  * Generate Token
  * 
  * @param {*} payload 
- * @param {*} exp 
+ * @param {*} exp
  */
 const generateToken = async (payload, exp = '30d') => {
   const token = await jwt.sign(payload, process.env.JWT_SECRET, {

@@ -9,6 +9,7 @@ let models = {
   respond: Responds,
   vote: Vote
 }
+/* istanbul ignore file */
 /**
  * Preparing Db before testing
  * 
