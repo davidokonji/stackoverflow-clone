@@ -16,8 +16,8 @@
       "description": "user authentication"
     },
     {
-      "name": "store",
-      "description": "Access to Petstore orders"
+      "name": "Question",
+      "description": "Stack Overflow clone question"
     },
     {
       "name": "user",
@@ -84,10 +84,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Pet object that needs to be added to the store",
+            "description": "body object for user",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Login"
+              "$ref": "#/definitions/Register"
             }
           }
         ],
@@ -101,68 +101,50 @@
           "405": {
             "description": "Validation exception"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       }
     },
-    "/pet/findByStatus": {
-      "get": {
+    "/question": {
+      "post": {
         "tags": [
-          "pet"
+          "Question"
         ],
-        "summary": "Finds Pets by status",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findPetsByStatus",
+        "summary": "Create a new question",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
           {
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
+            "in": "body",
+            "name": "body",
+            "description": "",
             "required": true,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "available",
-                "pending",
-                "sold"
-              ],
-              "default": "available"
-            },
-            "collectionFormat": "multi"
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Login"
-              }
-            }
+          "201": {
+            "description": "successful operation"
           },
           "400": {
             "description": "Invalid status value"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessed Entity"
           }
         },
         "security": [
           {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
+            "Bearer": []
           }
         ]
       }
@@ -205,16 +187,7 @@
           "400": {
             "description": "Invalid tag value"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ],
-        "deprecated": true
+        }
       }
     },
     "/pet/{petId}": {
@@ -252,12 +225,7 @@
           "404": {
             "description": "Pet not found"
           }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -301,15 +269,7 @@
           "405": {
             "description": "Invalid input"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -345,15 +305,7 @@
           "404": {
             "description": "Pet not found"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       }
     },
     "/pet/{petId}/uploadImage": {
@@ -401,15 +353,7 @@
               "$ref": "#/definitions/ApiResponse"
             }
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       }
     },
     "/store/inventory": {
@@ -435,12 +379,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
+        }
       }
     },
     "/store/order": {
@@ -825,18 +764,9 @@
     }
   },
   "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
-    },
-    "api_key": {
+    "Bearer": {
       "type": "apiKey",
-      "name": "api_key",
+      "name": "Authorization",
       "in": "header"
     }
   },
@@ -878,19 +808,12 @@
         "name": "Order"
       }
     },
-    "Category": {
+    "Question": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
+        "body": {
           "type": "string"
         }
-      },
-      "xml": {
-        "name": "Category"
       }
     },
     "User": {
@@ -928,15 +851,31 @@
         "name": "User"
       }
     },
-    "Tag": {
+    "Register": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
+        "email": {
+          "type": "string",
+          "example": "test@mail.com"
         },
-        "name": {
-          "type": "string"
+        "password": {
+          "type": "string",
+          "description": "",
+          "example": "password123456"
+        },
+        "firstname": {
+          "type": "string",
+          "example": "john"
+        },
+        "lastname": {
+          "type": "string",
+          "description": "",
+          "example": "doe"
+        },
+        "username": {
+          "type": "string",
+          "description": "john doe",
+          "example": "doe"
         }
       },
       "xml": {
