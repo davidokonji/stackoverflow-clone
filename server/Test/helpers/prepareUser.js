@@ -1,5 +1,12 @@
 import User from '../../Models/User';
-   
-const prepareUser = async () =>  await User.deleteMany({});
+import Question from '../../Models/Question';
 
-export default prepareUser;
+let models = {
+  user: User,
+  question: Question
+}
+const prepareDb = async (key) =>  {
+  return await models[key].deleteMany({});
+};
+
+export default prepareDb;

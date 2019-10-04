@@ -147,45 +147,51 @@
             "Bearer": []
           }
         ]
-      }
-    },
-    "/pet/findByTags": {
+      },
       "get": {
         "tags": [
-          "pet"
+          "Question"
         ],
-        "summary": "Finds Pets by tags",
-        "description": "Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing.",
-        "operationId": "findPetsByTags",
+        "summary": "Get all questions",
+        "description": "",
         "produces": [
-          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/question/:id": {
+      "get": {
+        "tags": [
+          "Question"
+        ],
+        "summary": "Get a question",
+        "description": "",
+        "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "tags",
+            "name": "Id",
             "in": "query",
-            "description": "Tags to filter by",
+            "description": "existing question id",
             "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Login"
-              }
-            }
+            "description": "successful operation"
           },
           "400": {
-            "description": "Invalid tag value"
+            "description": "Invalid Id passed"
           }
         }
       }
