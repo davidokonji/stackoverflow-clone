@@ -3,14 +3,14 @@ import chaiHttp from 'chai-http';
 import app from '../../index';
 import usermocks from './mocks/user-mock';
 import '../config/db';
-import User from '../Models/User';
+import prepareUser from './helpers/prepareUser';
 
 chai.use(chaiHttp);
 
 describe('User Authentication', function () {
 
   before(async () => {
-    await User.deleteMany({});
+    await prepareUser();
   })
 
   it('should create a user successfully', async () => {
