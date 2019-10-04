@@ -1,12 +1,30 @@
 import Question from "../Models/Question";
 import Response from "../Utils/response";
+import { ObjectID } from 'mongodb';
 
 class QuestionsController {
 
+  /**
+   * Get All Questions
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   */
   static async index(req, res) {
-
+    const questions = await Question.find({})
+    .populate({
+      path: 'author',
+      select: ['firstname','lastname','username','email']
+    }).exec();
+    return Response(res, 200,'Successfully fetched question', questions);
   }
 
+  /**
+   * Creating a new Question
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   */
   static async create(req, res) {
     const { 
       body: {
@@ -28,8 +46,22 @@ class QuestionsController {
     });
   }
 
+  /**
+   * Get a single question
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   */
   static async show(req, res) {
-
+    const { id } = req.params;
+    const question = await Question.findById(id)
+    .populate({
+      path: 'author',
+      select: ['firstname','lastname','username','email']
+    })
+    .exec();
+    if (!question) return Response(res, 404, 'Question not found');
+    return Response(res, 200,'Successfully fetched question', question);
   }
 }
 
