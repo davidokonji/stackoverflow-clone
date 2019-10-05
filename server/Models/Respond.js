@@ -19,6 +19,15 @@ const respondSchema = new Schema({
   }
 });
 
+respondSchema.index({response: 'text'});
+
+respondSchema.query.searchResponse =  function (body) {
+  return this.find({$text: {
+    $search: body,
+    $caseSensitive: false,
+    $diacriticSensitive: false
+  }});
+}
 const Responds = mongoose.model('Responses', respondSchema);
 
 export default Responds;

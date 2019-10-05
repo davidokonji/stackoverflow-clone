@@ -53,6 +53,17 @@ userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
+userSchema.index({firstname: 'text', lastname: 'text', username: 'text', email: 'text'});
+
+userSchema.query.searchUser = function(query) {
+  return this.find({$text: {
+    $search: query,
+    $caseSensitive: false,
+    $diacriticSensitive: false
+  }})
+  .select(['firstname','lastname','username','email']);
+}
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
