@@ -8,7 +8,7 @@ const router = Router();
 
 router.post(
   '/',
-  [ isAuthenticated, QuestionMiddlewares.validateQuestion ], 
+  [ isAuthenticated, QuestionMiddlewares.validateBodyField ], 
   QuestionController.create
 );
 
@@ -18,7 +18,8 @@ router.get(
   );
 
 router.get(
-  '/:id',validateObjId,
+  '/:id',
+  validateObjId,
   QuestionController.show
   );
 
@@ -36,7 +37,7 @@ router.put(
 
 router.post(
   '/:id/respond',
-  [isAuthenticated, validateObjId, QuestionMiddlewares.validateResponse],
+  [isAuthenticated, validateObjId, QuestionMiddlewares.validateBodyField],
    QuestionController.respond
    );
 

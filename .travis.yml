@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-  - "11"
+- '11'
 cache:
   directories:
-    - "node_modules"
+  - node_modules
 deploy:
   provider: heroku
   api_key:
@@ -11,21 +11,21 @@ deploy:
   app: stackoverflow-clone-dev
   on: develop
 services:
-  - mongodb
+- mongodb
 env:
   global:
-    - CC_TEST_REPORTER_ID=ffa5230a15263d51dbb963969ead2614a204366206eabdd62b0f927a7833857c
+  - CC_TEST_REPORTER_ID=ffa5230a15263d51dbb963969ead2614a204366206eabdd62b0f927a7833857c
 before_script:
-  - yarn add nyc -D
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+- yarn add nyc -D
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- -- --version 1.15.2
-  - export PATH="$HOME/.yarn/bin:$PATH"
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- -- --version 1.15.2
+- export PATH="$HOME/.yarn/bin:$PATH"
 script:
-  - yarn
-  - yarn test
+- yarn
+- yarn test
 after_script:
-  - yarn run coverage
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+- yarn run coverage
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"

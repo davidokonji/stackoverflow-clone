@@ -22,6 +22,16 @@ const question = new Schema({
   }
 });
 
+question.index({body: 'text'});
+
+question.query.searchQuestion = function(body) {
+  return this.find({$text: {
+    $search: body,
+    $caseSensitive: false,
+    $diacriticSensitive: false
+  }});
+}
+
 const Question = mongoose.model('Question', question);
 
 export default Question;
