@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const question = new Schema({
+  title: {
+    type: String,
+    required: true
+  },
   body: {
     type: String,
     required: true
@@ -22,7 +26,7 @@ const question = new Schema({
   }
 });
 
-question.index({body: 'text'});
+question.index({body: 'text', title: 'text'});
 
 question.query.searchQuestion = function(body) {
   return this.find({$text: {
