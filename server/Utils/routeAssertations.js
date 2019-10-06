@@ -31,7 +31,7 @@ const requiredAssertations = (req, res, next, options, extra) => {
  * @param {*} next 
  */
 const validateObjId = (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   try {
     new ObjectID(id);
     return next();

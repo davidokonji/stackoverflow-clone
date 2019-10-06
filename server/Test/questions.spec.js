@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 let validToken = '';
 let invalidToken = 'gsudgsudgsoudgsdousgduosgd';
 let questionId = '';
+let alternateToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDk5YmZhNjhmNTFjZDQ0MDRmYjg5NGUiLCJmaXJzdG5hbWUiOiJqb2huIiwibGFzdG5hbWUiOiJkb2UiLCJ1c2VybmFtZSI6ImpvaG4gZG9lIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTU3MDM1NzE1OCwiZXhwIjoxNTcyOTQ5MTU4fQ.TEpWRn1ugOO9LujpmtxcinNq-OWpHhzGwvwZzcJKzYw';
 
 describe('Questions', () => {
   before(async () => {
@@ -123,6 +124,17 @@ describe('Questions', () => {
       expect(res.body.data.vote).to.equal(1);
     });
 
+    it('should return 400 when user tries upvoted mulitple times', async () => {
+      const res = await chai
+      .request(app)
+      .put(`/api/question/${questionId}/upvote`)
+      .set({
+        Authorization: `Bearer ${validToken}`
+      });
+
+      expect(res).to.have.status(400);
+    });
+
     it('should return a 401 on unauthenticated user try', async () => {
       const res = await chai
       .request(app)
@@ -138,7 +150,7 @@ describe('Questions', () => {
       .request(app)
       .put(`/api/question/${questionId}/downvote`)
       .set({
-        Authorization: `Bearer ${validToken}`
+        Authorization: `Bearer ${alternateToken}`
       });
 
       expect(res).to.have.status(200);

@@ -173,7 +173,7 @@
         }
       }
     },
-    "/question/:id": {
+    "/question/{id}": {
       "get": {
         "tags": [
           "Question"
@@ -185,8 +185,8 @@
         ],
         "parameters": [
           {
-            "name": "Id",
-            "in": "query",
+            "name": "id",
+            "in": "path",
             "description": "existing question id",
             "required": true,
             "type": "string"
@@ -205,7 +205,7 @@
         }
       }
     },
-    "/question/:id/upvote": {
+    "/question/{id}/upvote": {
       "put": {
         "tags": [
           "Question"
@@ -217,11 +217,11 @@
         ],
         "parameters": [
           {
-            "name": "ID",
+            "name": "id",
             "in": "path",
             "description": "ID of question",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -245,7 +245,7 @@
         ]
       }
     },
-    "/question/:id/downvote": {
+    "/question/{id}/downvote": {
       "put": {
         "tags": [
           "Question"
@@ -257,11 +257,11 @@
         ],
         "parameters": [
           {
-            "name": "ID",
+            "name": "id",
             "in": "path",
             "description": "ID of question",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -285,7 +285,7 @@
         ]
       }
     },
-    "/question/:id/respond": {
+    "/question/{id}/respond": {
       "post": {
         "tags": [
           "Question"
@@ -297,11 +297,20 @@
         ],
         "parameters": [
           {
-            "name": "ID",
+            "name": "id",
             "in": "path",
             "description": "ID of question",
             "required": true,
-            "type": "integer"
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Respond"
+            }
           }
         ],
         "responses": {
@@ -325,7 +334,7 @@
         ]
       }
     },
-    "/question/:id/subscribe": {
+    "/question/{id}/subscribe": {
       "post": {
         "tags": [
           "Question"
@@ -337,11 +346,11 @@
         ],
         "parameters": [
           {
-            "name": "ID",
+            "name": "id",
             "in": "path",
             "description": "ID of question",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -411,12 +420,7 @@
           "401": {
             "description": "Unauthorized request"
           }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
+        }
       }
     }
   },
@@ -424,10 +428,20 @@
     "Bearer": {
       "type": "apiKey",
       "name": "Authorization",
-      "in": "header"
+      "in": "header",
+      "description": "Bearer token for request"
     }
   },
   "definitions": {
+    "Respond": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "string",
+          "example": "Test response for question"
+        }
+      }
+    },
     "Question": {
       "type": "object",
       "properties": {
