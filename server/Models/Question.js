@@ -26,12 +26,16 @@ const question = new Schema({
   }
 });
 
-question.index({body: 'text', title: 'text'});
+question.index({ title: "text", body: "text",},
+{ weights: { title: 5, body: 3, } });
 
 question.query.searchQuestion = function(body) {
   const regex = new RegExp(body, 'ig');
   return this.find({
-    title: {$regex: regex}
+    $or: [
+      {title: regex},
+      {body: regex}
+    ]
   })
 }
 
