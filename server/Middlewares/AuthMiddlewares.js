@@ -3,7 +3,7 @@ import validator from 'validator';
 import isEmpty from "../Utils/isEmpty";
 import isRequired from "../Utils/isRequired";
 
-class UserMiddlewares {
+class AuthMiddlewares {
 
   static async validateEmailPass(res, body, next) {
     const { email, password } = body;
@@ -27,7 +27,7 @@ class UserMiddlewares {
   }
 
   static async validateSignin(req, res, next) {
-    return UserMiddlewares.validateEmailPass(res, req.body, next);
+    return AuthMiddlewares.validateEmailPass(res, req.body, next);
   }
 
   static async validateSignup(req, res, next) {
@@ -35,8 +35,8 @@ class UserMiddlewares {
     if ((typeof requiredFields === 'object') && requiredFields.length > 0) {
       return Response(res, 422, requiredFields.map(err => err));
     }
-    return UserMiddlewares.validateEmailPass(res, req.body, next);
+    return AuthMiddlewares.validateEmailPass(res, req.body, next);
   }
 }
 
-export default UserMiddlewares;
+export default AuthMiddlewares;

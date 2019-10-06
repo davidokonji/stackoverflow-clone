@@ -2,13 +2,14 @@ import { Router } from 'express';
 import QuestionController  from '../controllers/QuestionsController';
 import isAuthenticated from '../Utils/authorization';
 import QuestionMiddlewares from '../Middlewares/QuestionMiddlewares';
-import validateObjId from '../Middlewares/validateObjectId';
+import { validateObjId } from '../Utils/routeAssertations';
+import SubscriptionMiddleware from '../Middlewares/SubscriptionMiddleware';
 
 const router = Router();
 
 router.post(
   '/',
-  [ isAuthenticated, QuestionMiddlewares.validateBodyField ], 
+  [ isAuthenticated, QuestionMiddlewares.validateFields], 
   QuestionController.create
 );
 
@@ -19,26 +20,42 @@ router.get(
 
 router.get(
   '/:id',
-  validateObjId,
+  [validateObjId, QuestionMiddlewares.validateQuestion],
   QuestionController.show
   );
 
 router.put(
   '/:id/upvote',
-  [isAuthenticated, validateObjId],
+  [isAuthenticated, validateObjId, QuestionMiddlewares.validateQuestion],
   QuestionController.upvote
   );
 
 router.put(
   '/:id/downvote',
-  [isAuthenticated, validateObjId],
+  [isAuthenticated, validateObjId, QuestionMiddlewares.validateQuestion],
    QuestionController.downvote
   );
 
 router.post(
   '/:id/respond',
-  [isAuthenticated, validateObjId, QuestionMiddlewares.validateBodyField],
+  [
+    isAuthenticated,
+    validateObjId,
+    QuestionMiddlewares.validateQuestion,
+    QuestionMiddlewares.validateBodyField
+  ],
    QuestionController.respond
    );
+
+router.post(
+  '/:id/subscribe',
+  [
+    isAuthenticated,
+    validateObjId,
+    QuestionMiddlewares.validateQuestion,
+    SubscriptionMiddleware.toogleSubscription,
+  ],
+  QuestionController.subscribe
+);
 
 export default router;

@@ -11,6 +11,13 @@ export default {
     firstname: 'john',
     lastname: 'doe',
   },
+  invalidPassword: {
+    email: 'test@gmail.com',
+    password: 'pass',
+    firstname: 'john',
+    lastname: 'doe',
+    username: 'john doe'
+  },
   validEmailLogin: {
     email: 'test@gmail.com',
     password: 'password1234',

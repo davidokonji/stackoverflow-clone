@@ -1,20 +1,20 @@
 import { Router } from 'express';
-import UserController from '../controllers/UserController';
-import UserMiddlewares from '../Middlewares/UserMiddlewares';
+import AuthController from '../controllers/AuthController';
+import AuthMiddlewares from '../Middlewares/AuthMiddlewares';
 
 
 const router = Router();
 
 router.post(
   '/signup',
-  [UserMiddlewares.validateSignup] ,
-   UserController.createUser
+  [AuthMiddlewares.validateSignup],
+   AuthController.createUser
   );
   
 router.post(
   '/login',
-  [UserMiddlewares.validateSignin],
-   UserController.signinUser
+  [AuthMiddlewares.validateSignin],
+   AuthController.signinUser
    );
 
 export default router;

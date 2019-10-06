@@ -2,6 +2,8 @@ import Question from "../Models/Question";
 import Response from "../Utils/response";
 import Vote from "../Models/Vote";
 import Responds from "../Models/Respond";
+import Subscription from "../Models/Subscription";
+import Notify from "../Events/NotificationHelper";
 
 class QuestionsController {
 
@@ -27,9 +29,10 @@ class QuestionsController {
    * @param {*} res 
    */
   static async create(req, res) {
-    const { body: { body }, user: { _id } } = req;
+    const { body: { title, body }, user: { _id } } = req;
 
     const newQestion = new Question({
+      title,
       body,
       author: _id
     });
@@ -54,7 +57,6 @@ class QuestionsController {
       select: ['firstname','lastname','username','email']
     })
     .exec();
-    if (!question) return Response(res, 404, 'Question not found');
     return Response(res, 200,'Successfully fetched question', question);
   }
 
@@ -68,7 +70,6 @@ class QuestionsController {
     const { params: { id }, user: { _id } } = req;
 
     const question = await Question.findById(id);
-    if(!question) return Response(res, 404, 'Question not found');
     question.vote += 1;
     question.save();
     //Tracking user votes
@@ -90,7 +91,6 @@ class QuestionsController {
       const { params: { id }, user: { _id } } = req;
     
       const question = await Question.findById(id);
-      if(!question) return Response(res, 404, 'Question not found');
       question.vote -= 1;
       question.save();
       //Tracking user votes
@@ -115,9 +115,29 @@ class QuestionsController {
       user: _id,
       question: id
     });
-    saveResponse.save(function(err, data) {
+    saveResponse.save(async function( err, data) {
+      await Notify.notifyUsers(data);
       return Response(res, 201, 'New Question Response', data);
-    })
+    });
+  }
+
+  /**
+   * Subscribe for a question
+   * 
+   * @param {*} req
+   * @param {*} res 
+   */
+  static async subscribe(req, res) {
+    const { params: { id }, user: { _id } } = req;
+    const newSubscription = new Subscription({
+      subscriber: _id,
+      question: id,
+      channel: `channel-${id}`
+    });
+    Notify.subscribe(`channel-${id}`);
+    newSubscription.save(function(err, data){
+      return Response(res, 201, 'Question subscribed succesfully', data);
+    });
   }
 }
 

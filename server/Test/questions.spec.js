@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../index';
-import usermocks from './mocks/user-mock';
+import usermocks from './mocks/auth-mock';
 import questionmocks from './mocks/question-mock';
 import prepareDb from './helpers/prepareDb';
 
@@ -185,6 +185,38 @@ describe('Questions', () => {
       .request(app)
       .post(`/api/question/${questionId}/respond`)
       .send(questionmocks.validResponse);
+
+      expect(res).to.have.status(401);
+    });
+  });
+
+  describe('Question Subscribe', () => {
+    it('should return 201 subscription of a question', async () => {
+      const res = await chai
+      .request(app)
+      .post(`/api/question/${questionId}/subscribe`)
+      .set({
+        Authorization: `Bearer ${validToken}`
+      });
+
+      expect(res).to.have.status(201);
+    });
+
+    it('should toggle subcription value', async () => {
+      const res = await chai
+      .request(app)
+      .post(`/api/question/${questionId}/subscribe`)
+      .set({
+        Authorization: `Bearer ${validToken}`
+      });
+
+      expect(res).to.have.status(200);
+    });
+
+    it('should return 401 on unauthenticated user try', async () => {
+      const res = await chai
+      .request(app)
+      .post(`/api/question/${questionId}/subscribe`)
 
       expect(res).to.have.status(401);
     });
