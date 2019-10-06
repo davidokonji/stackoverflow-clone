@@ -411,7 +411,12 @@
           "401": {
             "description": "Unauthorized request"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     }
   },
