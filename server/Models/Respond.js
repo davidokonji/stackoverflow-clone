@@ -22,11 +22,10 @@ const respondSchema = new Schema({
 respondSchema.index({response: 'text'});
 
 respondSchema.query.searchResponse =  function (body) {
-  return this.find({$text: {
-    $search: body,
-    $caseSensitive: false,
-    $diacriticSensitive: false
-  }});
+  const regex = new RegExp(body, 'ig');
+  return this.find({
+    response: {$regex: regex}
+  })
 }
 const Responds = mongoose.model('Responses', respondSchema);
 

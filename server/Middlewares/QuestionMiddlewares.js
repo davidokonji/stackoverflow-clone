@@ -52,6 +52,8 @@ class QuestionMiddlewares {
    */
   static async validateVoter(req, res, next) {
     const { params: { id }, user: { _id } } = req;
+    const question = await Question.findOne({_id: id, author: _id});
+    if(question) return Response(res, 400, "unsupported operation, can't vote own question");
     const voterExist = await Vote.findOne({question: id,user: _id});
     if(voterExist) return Response(res, 400, 'Vote already taken for question');
     return next();
