@@ -26,13 +26,13 @@ router.get(
 
 router.put(
   '/:id/upvote',
-  [isAuthenticated, validateObjId, QuestionMiddlewares.validateQuestion],
+  [isAuthenticated, validateObjId, QuestionMiddlewares.validateQuestion, QuestionMiddlewares.validateVoter],
   QuestionController.upvote
   );
 
 router.put(
   '/:id/downvote',
-  [isAuthenticated, validateObjId, QuestionMiddlewares.validateQuestion],
+  [isAuthenticated, validateObjId, QuestionMiddlewares.validateQuestion, QuestionMiddlewares.validateVoter],
    QuestionController.downvote
   );
 
