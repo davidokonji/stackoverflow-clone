@@ -11,6 +11,7 @@ let validToken = '';
 let invalidToken = 'gsudgsudgsoudgsdousgduosgd';
 let questionId = '';
 let alternateToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDk5YmZhNjhmNTFjZDQ0MDRmYjg5NGUiLCJmaXJzdG5hbWUiOiJqb2huIiwibGFzdG5hbWUiOiJkb2UiLCJ1c2VybmFtZSI6ImpvaG4gZG9lIiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTU3MDM1NzE1OCwiZXhwIjoxNTcyOTQ5MTU4fQ.TEpWRn1ugOO9LujpmtxcinNq-OWpHhzGwvwZzcJKzYw';
+let alternateToken2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDk4OTBkNTRlZDA0MDcyNmI2ZWE3OWUiLCJmaXJzdG5hbWUiOiJkYXZpZCIsImxhc3RuYW1lIjoib2tvbmppIiwidXNlcm5hbWUiOiJkYXZpZCIsImVtYWlsIjoiZGF2aWRva29uamlAZ21haWwuY29tIiwiaWF0IjoxNTcwMzU0NDYzLCJleHAiOjE1NzI5NDY0NjN9.zlA7AABVlZG2Yr1s9XwEsC4a3JbblqBAmM4gZ95oIeI';
 
 describe('Questions', () => {
   before(async () => {
@@ -38,6 +39,7 @@ describe('Questions', () => {
       .send(questionmocks.validQuestion);
 
       questionId = res.body.data._id;
+
       expect(res).to.have.status(201);
     });
   
@@ -117,7 +119,7 @@ describe('Questions', () => {
       .request(app)
       .put(`/api/question/${questionId}/upvote`)
       .set({
-        Authorization: `Bearer ${validToken}`
+        Authorization: `Bearer ${alternateToken}`
       });
 
       expect(res).to.have.status(200);
@@ -150,7 +152,7 @@ describe('Questions', () => {
       .request(app)
       .put(`/api/question/${questionId}/downvote`)
       .set({
-        Authorization: `Bearer ${alternateToken}`
+        Authorization: `Bearer ${alternateToken2}`
       });
 
       expect(res).to.have.status(200);

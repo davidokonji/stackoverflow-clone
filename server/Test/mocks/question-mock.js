@@ -1,6 +1,6 @@
 export default {
   validQuestion: {
-    title: "this is a valid title",
+    title: "this is a valid test title",
     body: "This is a test for a question"
   },
   invalidQuestion: {

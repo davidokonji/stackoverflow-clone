@@ -29,11 +29,10 @@ const question = new Schema({
 question.index({body: 'text', title: 'text'});
 
 question.query.searchQuestion = function(body) {
-  return this.find({$text: {
-    $search: body,
-    $caseSensitive: false,
-    $diacriticSensitive: false
-  }});
+  const regex = new RegExp(body, 'ig');
+  return this.find({
+    title: {$regex: regex}
+  })
 }
 
 const Question = mongoose.model('Question', question);
