@@ -5,6 +5,13 @@ import isRequired from "../Utils/isRequired";
 
 class AuthMiddlewares {
 
+  /**
+   * Validate Email and Password helper
+   * 
+   * @param {*} res 
+   * @param {*} body 
+   * @param {*} next 
+   */
   static async validateEmailPass(res, body, next) {
     const { email, password } = body;
     const errObj = {};
@@ -26,10 +33,24 @@ class AuthMiddlewares {
     }
   }
 
+  /**
+   * Validating a signed in parameters
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   */
   static async validateSignin(req, res, next) {
     return AuthMiddlewares.validateEmailPass(res, req.body, next);
   }
 
+  /**
+   * Validating a sign up parameters
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   */
   static async validateSignup(req, res, next) {
     const requiredFields = isRequired(req.body, ['email', 'password','firstname','lastname','username']);
     if ((typeof requiredFields === 'object') && requiredFields.length > 0) {
