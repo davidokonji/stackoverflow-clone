@@ -420,7 +420,12 @@
           "401": {
             "description": "Unauthorized request"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     }
   },
@@ -429,7 +434,7 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "Bearer token for request"
+      "description": "Bearer token for request, ensure to prefix Bearer, e.g. Bearer your-secure-token"
     }
   },
   "definitions": {

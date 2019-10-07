@@ -55,7 +55,7 @@ class QuestionMiddlewares {
     const question = await Question.findOne({_id: id, author: _id});
     if(question) return Response(res, 400, "unsupported operation, can't vote own question");
     const voterExist = await Vote.findOne({question: id,user: _id});
-    if(voterExist) return Response(res, 400, 'Vote already taken for question');
+    if(voterExist) return Response(res, 400, 'Thanks for your interest, vote already taken');
     return next();
   }
 }

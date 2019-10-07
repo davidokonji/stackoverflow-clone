@@ -9,6 +9,8 @@ A simple stack overflow clone.
 ---
 ## OpenApi Docmentation
 > API documentation can be viewed using [Link](https://stackoverflow-clone-dev.herokuapp.com/api/docs/)
+
+> `NOTE:` when testing protected routes please add `Bearer` to the prefix of the token. eg 'Bearer your-valid-token' as its a bearer Authorization used for securing routes.
 ---
 ## Technologies
 - Node JS
