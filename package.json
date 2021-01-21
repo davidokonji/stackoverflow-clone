@@ -35,7 +35,7 @@
     "mocha": "^6.2.1",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.3",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "swagger-ui-express": "^4.1.1",
     "validator": "^11.1.0"
   },
