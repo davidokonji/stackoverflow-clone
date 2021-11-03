@@ -37,7 +37,7 @@
     "mongoose": "^5.7.3",
     "socket.io": "^2.3.0",
     "swagger-ui-express": "^4.1.1",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.2",
